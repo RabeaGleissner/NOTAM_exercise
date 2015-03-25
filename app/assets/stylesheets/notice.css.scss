@@ -32,14 +32,24 @@ body {
           text-decoration: none;
           border-radius: 0.7em;
           font-size: 1.2em;
+          color: black;
 
           &:hover {
-            background-color: #fafafa;
             text-decoration: underline;
           }
         }
       }
       }
+    }
+
+    .error {
+      display:none;
+      color: red;
+      background-color: white;
+      padding: 5px;
+      width: 80%;
+      margin: 0 auto;
+
     }
 
   table {

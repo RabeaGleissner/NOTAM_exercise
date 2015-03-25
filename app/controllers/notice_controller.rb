@@ -43,13 +43,16 @@ class NoticeController < ApplicationController
     array = split_array(input_array)
 
     monday = array.select {|x| x.include?("E)")}.flatten
-    index = monday.index('MON')
-    monday[index+1]    
+    # n = /\AMON/
+    index = monday.index("MON")
+    monday[index+1]  
+      
   end
 
   def split_array(array)
     array.map do |line|
       line.split(' ')
+      
     end
   end
 

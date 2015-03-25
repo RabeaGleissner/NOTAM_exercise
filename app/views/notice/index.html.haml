@@ -1,6 +1,9 @@
 %h1 Welcome to the NOTAMator
 %h2 Please enter your NOTAM
 
+.error
+  There was an error! Your input has to include ‘AERODROME HOURS OF OPS/SERVICE’ - otherwise you can't submit it.
+
 = form_tag create_path, :method => :post do
   = text_area_tag "input", nil, rows: 10, cols: 50
   %div
