@@ -28,12 +28,13 @@ body {
 
         a {
           padding: 10px;
-          background-color: white;
+          background-color: #ffffff;
           text-decoration: none;
           border-radius: 0.7em;
+          font-size: 1.2em;
 
           &:hover {
-            background-color: lightpink;
+            background-color: #fafafa;
             text-decoration: underline;
           }
         }
