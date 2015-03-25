@@ -6,13 +6,16 @@ class NoticeController < ApplicationController
 
   def create
 
-    @notice = Notice.new
+ 
 
     input_array = params[:input].split("\n").collect do |line|
       line
     end
 
     @icao_code = icao_code(input_array)
+
+    @notice = Notice.new(icao_code: @icao_code)
+    @notice.save
 
     redirect_to results_path
   end
