@@ -8,7 +8,15 @@
 </head>
 <body>
 
+<div class="wrapper">
+  <nav>
+  <ul>
+    <li><%= link_to "Input", root_path  %></li>
+    <li><%= link_to "Results", results_path  %></li>
+  </ul>
+  </nav>
 <%= yield %>
+</div>
 
 </body>
 </html>
