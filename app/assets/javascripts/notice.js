@@ -14,6 +14,9 @@ $(function(){
 
   });
 
-
+$('.error a').click(function(e){
+  e.preventDefault();
+  $(".error").slideToggle();
+});
 
 });
