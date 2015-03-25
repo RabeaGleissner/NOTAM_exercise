@@ -1,2 +1,36 @@
 %h1 Results page
 %h2 Find the NOTAMator's output below
+
+%table
+  %thead
+    %td ICAO code
+    %td Monday
+    %td Tuesday
+    %td Wednesday
+    %td Thursday
+    %td Friday
+    %td Saturday
+    %td Sunday
+    %td Created
+  %tbody
+  - @notices.each do |notice|
+    %tr
+      %td
+        = notice.icao_code
+      %td
+        = notice.mon
+      %td
+        = notice.tue
+      %td
+        = notice.wed
+      %td
+        = notice.thu
+      %td
+        = notice.fri
+      %td
+        = notice.sat
+      %td
+        = notice.sun
+      %td
+        = distance_of_time_in_words(Time.now, notice.created_at)
+        ago

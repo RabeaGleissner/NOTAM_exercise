@@ -40,5 +40,15 @@ body {
       }
       }
     }
+
+  table {
+    width: 95%;
+    margin: 0 auto;
+    td {
+      text-align: center;
+      padding: 8px;
+      border: 1px dashed black;
+    }
+  }
   }
 }

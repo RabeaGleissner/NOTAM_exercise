@@ -21,6 +21,7 @@ class NoticeController < ApplicationController
   end
 
   def results
+    @notices = Notice.all
     
   end
 
