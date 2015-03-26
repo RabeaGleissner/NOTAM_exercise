@@ -12,7 +12,8 @@ class NoticeController < ApplicationController
 
     @icao_code = icao_code(input_array)
 
-    weekday(input_array)
+    single_day(input_array)
+    several_days(input_array)
 
     @notice = Notice.new(icao_code: @icao_code, mon: @mon, tue: @tue, wed: @wed, thu: @thu, fri: @fri, sat: @sat, sun: @sun)
     @notice.save
@@ -38,7 +39,8 @@ class NoticeController < ApplicationController
    icao_array[1]
   end
 
-  def weekday(input_array)
+# Method to save opening times for individual days
+  def single_day(input_array)
     array = split_array(input_array).flatten
 
   if array.include? "MON"
@@ -95,9 +97,28 @@ class NoticeController < ApplicationController
     if @sun.include? ','
       @sun = array[index+1] + ' ' + array[index+2]
     end
-  end
-      
-  end
+  end    
+end
+
+# Method to save opening times for several days
+def several_days(input_array)
+   array = split_array(input_array).flatten
+
+ if array.any? { |s| s.include?('MON-') }
+   index = array.index{|s| s.include?("MON-")}
+   @mon = array[index+1]
+
+   if @mon.include? ','
+     @mon = array[index+1] + array[index+2]
+   end
+
+   day = array[index][/.*-([^-]*)/,1].downcase.to_sym
+
+   instance_variable_set("@#{day}", @mon)
+
+
+ end
+end
 
   def split_array(array)
     array.map do |line|
