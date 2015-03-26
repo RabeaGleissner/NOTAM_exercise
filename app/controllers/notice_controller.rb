@@ -45,31 +45,52 @@ class NoticeController < ApplicationController
     # monday = array.select {|x| x.include?("E)")}
   if array.include? "MON"
     index = array.index("MON")
-    @mon = array[index+1]  
+    @mon = array[index+1]
+    if @mon.include? ','
+      @mon = array[index+1] + array[index+2]
+    end
   end
   if array.include? "TUE"
     index = array.index("TUE")
-    @tue = array[index+1]  
+    @tue = array[index+1] 
+    if @tue.include? ','
+      @tue = array[index+1] + ' ' + array[index+2]
+    end 
   end
   if array.include? "WED"
     index = array.index("WED")
     @wed = array[index+1]  
+    if @wed.include? ','
+      @wed = array[index+1] + ' ' + array[index+2]
+    end
   end
   if array.include? "THU"
     index = array.index("THU")
     @thu = array[index+1]  
+    if @thu.include? ','
+      @thu = array[index+1] + ' ' + array[index+2]
+    end
   end
   if array.include? "FRI"
     index = array.index("FRI")
-    @fri = array[index+1]  
+    @fri = array[index+1] 
+    if @fri.include? ','
+      @fri = array[index+1] + ' ' + array[index+2]
+    end 
   end
   if array.include? "SAT"
     index = array.index("SAT")
     @sat = array[index+1]  
+    if @sat.include? ','
+      @sat = array[index+1] + ' ' + array[index+2]
+    end
   end
   if array.include? "SUN"
     index = array.index("SUN")
     @sun = array[index+1]  
+    if @sun.include? ','
+      @sun = array[index+1] + ' ' + array[index+2]
+    end
   end
       
   end
