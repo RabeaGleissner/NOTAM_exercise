@@ -38,11 +38,9 @@ class NoticeController < ApplicationController
    icao_array[1]
   end
 
-# Method to find Monday opening times
   def weekday(input_array)
     array = split_array(input_array).flatten
 
-    # monday = array.select {|x| x.include?("E)")}
   if array.include? "MON"
     index = array.index("MON")
     @mon = array[index+1]
@@ -50,6 +48,7 @@ class NoticeController < ApplicationController
       @mon = array[index+1] + array[index+2]
     end
   end
+
   if array.include? "TUE"
     index = array.index("TUE")
     @tue = array[index+1] 
@@ -57,6 +56,7 @@ class NoticeController < ApplicationController
       @tue = array[index+1] + ' ' + array[index+2]
     end 
   end
+
   if array.include? "WED"
     index = array.index("WED")
     @wed = array[index+1]  
@@ -64,6 +64,7 @@ class NoticeController < ApplicationController
       @wed = array[index+1] + ' ' + array[index+2]
     end
   end
+
   if array.include? "THU"
     index = array.index("THU")
     @thu = array[index+1]  
@@ -71,6 +72,7 @@ class NoticeController < ApplicationController
       @thu = array[index+1] + ' ' + array[index+2]
     end
   end
+
   if array.include? "FRI"
     index = array.index("FRI")
     @fri = array[index+1] 
@@ -78,6 +80,7 @@ class NoticeController < ApplicationController
       @fri = array[index+1] + ' ' + array[index+2]
     end 
   end
+
   if array.include? "SAT"
     index = array.index("SAT")
     @sat = array[index+1]  
@@ -85,6 +88,7 @@ class NoticeController < ApplicationController
       @sat = array[index+1] + ' ' + array[index+2]
     end
   end
+
   if array.include? "SUN"
     index = array.index("SUN")
     @sun = array[index+1]  
@@ -98,7 +102,6 @@ class NoticeController < ApplicationController
   def split_array(array)
     array.map do |line|
       line.split(' ')
-      
     end
   end
 
