@@ -1,4 +1,6 @@
 class Notice < ActiveRecord::Base
+
+  DAYS = [:mon, :tue, :wed, :thu, :fri, :sat, :sun]
   #Method to create a single notam from the input of several notams.
   def new_from_notam_array(data)
 
@@ -90,7 +92,7 @@ class Notice < ActiveRecord::Base
   # Method to save opening times for several days
   def several_days(input_array)
      array = split_array(input_array).flatten
-
+     
   # starting with monday
    if array.any? { |s| s.include?('MON-') }
      index = array.index{|s| s.include?("MON-")}
@@ -99,8 +101,11 @@ class Notice < ActiveRecord::Base
      if self.mon.include? ','
        self.mon = array[index+1] + array[index+2]
      end
+
      day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-     instance_variable_set("@#{day}", self.mon)
+
+     set_instance_variables(day, self.mon)
+     find_days_inbetween(:mon, mon, day)
    end
 
   # starting with tuesday
@@ -112,7 +117,8 @@ class Notice < ActiveRecord::Base
        self.tue = array[index+1] + array[index+2]
      end
      day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-     instance_variable_set("@#{day}", self.tue)
+     set_instance_variables(day, self.tue)
+     find_days_inbetween(:tue, tue, day)
    end
 
    # starting with wednesday
@@ -124,7 +130,8 @@ class Notice < ActiveRecord::Base
         self.wed = array[index+1] + array[index+2]
       end
       day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-      instance_variable_set("@#{day}", self.wed)
+      set_instance_variables(day, self.wed)
+      find_days_inbetween(:wed, wed, day)    
     end
 
     # starting with thursday
@@ -136,7 +143,8 @@ class Notice < ActiveRecord::Base
          self.thu = array[index+1] + array[index+2]
        end
        day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-       instance_variable_set("@#{day}", self.thu)
+       set_instance_variables(day, self.thu)
+       find_days_inbetween(:thu, thu, day) 
      end
 
      # starting with friday
@@ -148,7 +156,9 @@ class Notice < ActiveRecord::Base
           self.fri = array[index+1] + array[index+2]
         end
         day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-        instance_variable_set("@#{day}", self.fri)
+       set_instance_variables(day, self.fri)
+       find_days_inbetween(:fri, fri, day) 
+
       end
 
       # starting with saturday
@@ -160,7 +170,8 @@ class Notice < ActiveRecord::Base
            self.sat = array[index+1] + array[index+2]
          end
          day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-         instance_variable_set("@#{day}", self.sat)
+        set_instance_variables(day, self.sat)
+        find_days_inbetween(:sat, sat, day) 
        end
 
        # starting with sunday
@@ -172,10 +183,53 @@ class Notice < ActiveRecord::Base
             self.sun = array[index+1] + array[index+2]
           end
           day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-          instance_variable_set("@#{day}", self.sun)
+         set_instance_variables(day, self.sun)
+          find_days_inbetween(:sun, sun, day) 
         end
+  end
 
+  def set_instance_variables(day, start_day)
+    instance_variable_set("@#{day}", start_day)
+    if @mon
+      self.mon = @mon
+    elsif @tue
+      self.tue = @tue
+    elsif @wed
+      self.wed = @wed
+    elsif @thu
+      self.thu = @thu
+    elsif @fri
+      self.fri = @fri
+    elsif @sat
+      self.sat = @sat
+    elsif @sun
+      self.sun = @sun
+    end
+    
+  end
 
+# Find days that aren't explicitly spelled out
+  def find_days_inbetween(start_day_symbol, start_day_variable, end_day )
+    i = DAYS.index(end_day)
+      while i > DAYS.index(start_day_symbol)
+        instance_variable_set("@#{DAYS[i-1]}", start_day_variable)
+        i -= 1
+          if @mon
+            self.mon = @mon
+          elsif @tue
+            self.tue = @tue
+          elsif @wed
+            self.wed = @wed
+          elsif @thu
+            self.thu = @thu
+          elsif @fri
+            self.fri = @fri
+          elsif @sat
+            self.sat = @sat
+          elsif @sun
+            self.sun = @sun
+          end
+      end
   end
 
     def split_array(array)
@@ -183,5 +237,17 @@ class Notice < ActiveRecord::Base
         line.split(' ')
       end
     end
+
+    # def change_instance_variable(instance_variable)
+    #   case instance_variable
+    #   when @mon
+    #     self.mon
+    #   when @tue
+    #     self.tue
+
+    #   end
+
+      
+    # end
 
 end
