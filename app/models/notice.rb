@@ -32,57 +32,57 @@ class Notice < ActiveRecord::Base
 
     if array.include? "MON"
       index = array.index("MON")
-      @mon = array[index+1]
-      if @mon.include? ','
-        @mon = array[index+1] + array[index+2]
+      self.mon = array[index+1]
+      if self.mon.include? ','
+        self.mon = array[index+1] + array[index+2]
       end
     end
 
     if array.include? "TUE"
       index = array.index("TUE")
-      @tue = array[index+1] 
-      if @tue.include? ','
-        @tue = array[index+1] + ' ' + array[index+2]
+      self.tue = array[index+1] 
+      if self.tue.include? ','
+        self.tue = array[index+1] + ' ' + array[index+2]
       end 
     end
 
     if array.include? "WED"
       index = array.index("WED")
-      @wed = array[index+1]  
-      if @wed.include? ','
-        @wed = array[index+1] + ' ' + array[index+2]
+      self.wed = array[index+1]  
+      if self.wed.include? ','
+        self.wed = array[index+1] + ' ' + array[index+2]
       end
     end
 
     if array.include? "THU"
       index = array.index("THU")
-      @thu = array[index+1]  
-      if @thu.include? ','
-        @thu = array[index+1] + ' ' + array[index+2]
+      self.thu = array[index+1]  
+      if self.thu.include? ','
+        self.thu = array[index+1] + ' ' + array[index+2]
       end
     end
 
     if array.include? "FRI"
       index = array.index("FRI")
-      @fri = array[index+1] 
-      if @fri.include? ','
-        @fri = array[index+1] + ' ' + array[index+2]
+      self.fri = array[index+1] 
+      if self.fri.include? ','
+        self.fri = array[index+1] + ' ' + array[index+2]
       end 
     end
 
     if array.include? "SAT"
       index = array.index("SAT")
-      @sat = array[index+1]  
-      if @sat.include? ','
-        @sat = array[index+1] + ' ' + array[index+2]
+      self.sat = array[index+1]  
+      if self.sat.include? ','
+        self.sat = array[index+1] + ' ' + array[index+2]
       end
     end
 
     if array.include? "SUN"
       index = array.index("SUN")
-      @sun = array[index+1]  
-      if @sun.include? ','
-        @sun = array[index+1] + ' ' + array[index+2]
+      self.sun = array[index+1]  
+      if self.sun.include? ','
+        self.sun = array[index+1] + ' ' + array[index+2]
       end
     end    
   end
@@ -94,85 +94,85 @@ class Notice < ActiveRecord::Base
   # starting with monday
    if array.any? { |s| s.include?('MON-') }
      index = array.index{|s| s.include?("MON-")}
-     @mon = array[index+1]
+     self.mon = array[index+1]
 
-     if @mon.include? ','
-       @mon = array[index+1] + array[index+2]
+     if self.mon.include? ','
+       self.mon = array[index+1] + array[index+2]
      end
      day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-     instance_variable_set("@#{day}", @mon)
+     instance_variable_set("@#{day}", self.mon)
    end
 
   # starting with tuesday
    if array.any? { |s| s.include?('TUE-') }
      index = array.index{|s| s.include?("TUE-")}
-     @tue = array[index+1]
+     self.tue = array[index+1]
 
-     if @tue.include? ','
-       @tue = array[index+1] + array[index+2]
+     if self.tue.include? ','
+       self.tue = array[index+1] + array[index+2]
      end
      day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-     instance_variable_set("@#{day}", @tue)
+     instance_variable_set("@#{day}", self.tue)
    end
 
    # starting with wednesday
     if array.any? { |s| s.include?('WED-') }
       index = array.index{|s| s.include?("WED-")}
-      @wed = array[index+1]
+      self.wed = array[index+1]
 
-      if @wed.include? ','
-        @wed = array[index+1] + array[index+2]
+      if self.wed.include? ','
+        self.wed = array[index+1] + array[index+2]
       end
       day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-      instance_variable_set("@#{day}", @wed)
+      instance_variable_set("@#{day}", self.wed)
     end
 
     # starting with thursday
      if array.any? { |s| s.include?('THU-') }
        index = array.index{|s| s.include?("THU-")}
-       @thu = array[index+1]
+       self.thu = array[index+1]
 
-       if @thu.include? ','
-         @thu = array[index+1] + array[index+2]
+       if self.thu.include? ','
+         self.thu = array[index+1] + array[index+2]
        end
        day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-       instance_variable_set("@#{day}", @thu)
+       instance_variable_set("@#{day}", self.thu)
      end
 
      # starting with friday
       if array.any? { |s| s.include?('FRI-') }
         index = array.index{|s| s.include?("FRI-")}
-        @fri = array[index+1]
+        self.fri = array[index+1]
 
-        if @fri.include? ','
-          @fri = array[index+1] + array[index+2]
+        if self.fri.include? ','
+          self.fri = array[index+1] + array[index+2]
         end
         day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-        instance_variable_set("@#{day}", @fri)
+        instance_variable_set("@#{day}", self.fri)
       end
 
       # starting with saturday
        if array.any? { |s| s.include?('SAT-') }
          index = array.index{|s| s.include?("SAT-")}
-         @sat = array[index+1]
+         self.sat = array[index+1]
 
-         if @sat.include? ','
-           @sat = array[index+1] + array[index+2]
+         if self.sat.include? ','
+           self.sat = array[index+1] + array[index+2]
          end
          day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-         instance_variable_set("@#{day}", @sat)
+         instance_variable_set("@#{day}", self.sat)
        end
 
        # starting with sunday
         if array.any? { |s| s.include?('SUN-') }
           index = array.index{|s| s.include?("SUN-")}
-          @sun = array[index+1]
+          self.sun = array[index+1]
 
-          if @sun.include? ','
-            @sun = array[index+1] + array[index+2]
+          if self.sun.include? ','
+            self.sun = array[index+1] + array[index+2]
           end
           day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-          instance_variable_set("@#{day}", @sun)
+          instance_variable_set("@#{day}", self.sun)
         end
 
 
