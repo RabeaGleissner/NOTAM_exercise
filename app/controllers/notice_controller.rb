@@ -6,6 +6,10 @@ class NoticeController < ApplicationController
 
   def create
 
+    notam_array = params[:input].split("\r\n\r\n")
+
+    
+
     @input_array = params[:input].split("\n").collect do |line|
       line
     end
