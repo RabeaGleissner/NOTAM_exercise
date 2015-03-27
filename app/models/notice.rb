@@ -3,11 +3,9 @@ class Notice < ActiveRecord::Base
   DAYS = [:mon, :tue, :wed, :thu, :fri, :sat, :sun]
   #Method to create a single notam from the input of several notams.
   def new_from_notam_array(data)
-
     input_array = data.split("\n").collect do |line|
       line
     end
-
     contains_phrase(input_array)
     self.icao_code = extract_icao_code(input_array) unless destroyed?
     single_day(input_array) unless destroyed?
@@ -22,8 +20,7 @@ class Notice < ActiveRecord::Base
 
   # Method to extract icao code from input
     def extract_icao_code(input_array)
-    array = split_array(input_array)
-
+     array = split_array(input_array)
      icao_array = array.select {|x| x.include?("A)")}.flatten
      icao_array[1]
     end
@@ -104,7 +101,7 @@ class Notice < ActiveRecord::Base
 
      day = array[index][/.*-([^-]*)/,1].downcase.to_sym
 
-     set_instance_variables(day, self.mon)
+     set_variables(day, self.mon)
      find_days_inbetween(:mon, mon, day)
    end
 
@@ -117,7 +114,7 @@ class Notice < ActiveRecord::Base
        self.tue = array[index+1] + array[index+2]
      end
      day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-     set_instance_variables(day, self.tue)
+     set_variables(day, self.tue)
      find_days_inbetween(:tue, tue, day)
    end
 
@@ -130,7 +127,7 @@ class Notice < ActiveRecord::Base
         self.wed = array[index+1] + array[index+2]
       end
       day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-      set_instance_variables(day, self.wed)
+      set_variables(day, self.wed)
       find_days_inbetween(:wed, wed, day)    
     end
 
@@ -143,7 +140,7 @@ class Notice < ActiveRecord::Base
          self.thu = array[index+1] + array[index+2]
        end
        day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-       set_instance_variables(day, self.thu)
+       set_variables(day, self.thu)
        find_days_inbetween(:thu, thu, day) 
      end
 
@@ -156,9 +153,8 @@ class Notice < ActiveRecord::Base
           self.fri = array[index+1] + array[index+2]
         end
         day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-       set_instance_variables(day, self.fri)
-       find_days_inbetween(:fri, fri, day) 
-
+        set_variables(day, self.fri)
+        find_days_inbetween(:fri, fri, day) 
       end
 
       # starting with saturday
@@ -170,8 +166,8 @@ class Notice < ActiveRecord::Base
            self.sat = array[index+1] + array[index+2]
          end
          day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-        set_instance_variables(day, self.sat)
-        find_days_inbetween(:sat, sat, day) 
+         set_variables(day, self.sat)
+         find_days_inbetween(:sat, sat, day) 
        end
 
        # starting with sunday
@@ -183,12 +179,12 @@ class Notice < ActiveRecord::Base
             self.sun = array[index+1] + array[index+2]
           end
           day = array[index][/.*-([^-]*)/,1].downcase.to_sym
-         set_instance_variables(day, self.sun)
+         set_variables(day, self.sun)
           find_days_inbetween(:sun, sun, day) 
         end
   end
 
-  def set_instance_variables(day, start_day)
+  def set_variables(day, start_day)
     instance_variable_set("@#{day}", start_day)
     if @mon
       self.mon = @mon
@@ -204,8 +200,7 @@ class Notice < ActiveRecord::Base
       self.sat = @sat
     elsif @sun
       self.sun = @sun
-    end
-    
+    end  
   end
 
 # Find days that aren't explicitly spelled out
@@ -237,17 +232,4 @@ class Notice < ActiveRecord::Base
         line.split(' ')
       end
     end
-
-    # def change_instance_variable(instance_variable)
-    #   case instance_variable
-    #   when @mon
-    #     self.mon
-    #   when @tue
-    #     self.tue
-
-    #   end
-
-      
-    # end
-
 end
