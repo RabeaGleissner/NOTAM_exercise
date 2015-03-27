@@ -10,7 +10,10 @@ class NoticeController < ApplicationController
     notam_array.each do |data|
     @notice = Notice.new
     @notice.new_from_notam_array(data)
-    @notice.save
+    
+    unless @notice.destroyed?
+     @notice.save 
+   end
    end   
 
     redirect_to results_path

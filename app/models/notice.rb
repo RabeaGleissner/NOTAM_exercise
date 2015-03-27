@@ -1,20 +1,21 @@
 class Notice < ActiveRecord::Base
-
-  # validate :contains_phrase
-
   #Method to create a single notam from the input of several notams.
   def new_from_notam_array(data)
 
     input_array = data.split("\n").collect do |line|
       line
     end
-  
-    self.icao_code = extract_icao_code(input_array)
-    
-    single_day(input_array)
 
-    several_days(input_array)
-    
+    contains_phrase(input_array)
+    self.icao_code = extract_icao_code(input_array) unless destroyed?
+    single_day(input_array) unless destroyed?
+    several_days(input_array) unless destroyed?
+  end
+
+  def contains_phrase(input_array)
+   unless input_array.to_s.include? "AERODROME HOURS OF OPS/SERVICE"
+      self.destroy
+    end
   end
 
   # Method to extract icao code from input
@@ -28,7 +29,6 @@ class Notice < ActiveRecord::Base
   # Method to save opening times for individual days
     def single_day(input_array)
       array = split_array(input_array).flatten
-
 
     if array.include? "MON"
       index = array.index("MON")
@@ -183,17 +183,5 @@ class Notice < ActiveRecord::Base
         line.split(' ')
       end
     end
-
-
-
-
-  # def contains_phrase
-  #  unless @notice.include? "AERODROME HOURS OF OPS/SERVICE"
-
-  #   errors.add("Sorry, you can't submit this because you didn't include the phrase ‘AERODROME HOURS OF OPS/SERVICE’ ")
-  #   end
-  # raise
-  # end
-
 
 end
